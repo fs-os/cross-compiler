@@ -3,7 +3,8 @@
 # https://wiki.osdev.org/GCC_Cross-Compiler#Installing_Dependencies
 { pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/0938d73bb143f4ae037143572f11f4338c7b2d1c.tar.gz") {} }:
 
-pkgs.mkShell {
+pkgs.gcc12Stdenv.mkDerivation {
+    name = "cross-compiler-shell";
     buildInputs = [
         pkgs.gcc12
         pkgs.gnumake
@@ -13,5 +14,7 @@ pkgs.mkShell {
         pkgs.libmpc
         pkgs.mpfr
         pkgs.texinfo
+        /* pkgs.cloog */
+        /* pkgs.isl */
     ];
 }
