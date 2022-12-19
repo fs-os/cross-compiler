@@ -9,7 +9,7 @@ all: dependencies build-utils build-gcc
 
 # Download and extract dependencies into ./src/
 #   - binutils-2.39
-#   - gcc-11.3.0
+#   - gcc-12.2.0
 dependencies:
 	@mkdir -p $(SRC_FOLDER)
 	
@@ -17,9 +17,9 @@ dependencies:
 	tar -xf $(SRC_FOLDER)/binutils-2.39.tar.gz --directory=$(SRC_FOLDER)
 	rm -f $(SRC_FOLDER)/binutils-2.39.tar.gz
 	
-	curl -o $(SRC_FOLDER)/gcc-11.3.0.tar.gz https://bigsearcher.com/mirrors/gcc/releases/gcc-11.3.0/gcc-11.3.0.tar.gz
-	tar -xf $(SRC_FOLDER)/gcc-11.3.0.tar.gz --directory=$(SRC_FOLDER)
-	rm -f $(SRC_FOLDER)/gcc-11.3.0.tar.gz
+	curl -o $(SRC_FOLDER)/gcc-12.2.0.tar.gz https://bigsearcher.com/mirrors/gcc/releases/gcc-12.2.0/gcc-12.2.0.tar.gz
+	tar -xf $(SRC_FOLDER)/gcc-12.2.0.tar.gz --directory=$(SRC_FOLDER)
+	rm -f $(SRC_FOLDER)/gcc-12.2.0.tar.gz
 
 # Run after dependencies
 build-utils:
@@ -37,7 +37,7 @@ build-gcc:
 	# Add to path and build. We don't need cpp when configuring
 	export PATH="$(PREFIX)/bin:$$PATH" && \
 	cd $(SRC_FOLDER)/build-gcc && \
-	../gcc-11.3.0/configure --target=$(TARGET) --prefix="$(PREFIX)" --disable-nls --enable-languages=c --without-headers && \
+	../gcc-12.2.0/configure --target=$(TARGET) --prefix="$(PREFIX)" --disable-nls --enable-languages=c --without-headers && \
 	make all-gcc && \
 	make all-target-libgcc && \
 	sudo make install-gcc && \
