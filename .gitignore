@@ -1,3 +1,6 @@
+# Forder where we will download the dependencies and build them, don't commit
+/src
+
 # Prerequisites
 *.d
 
