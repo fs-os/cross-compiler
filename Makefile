@@ -21,6 +21,7 @@ dependencies:
 	tar -xf $(SRC_FOLDER)/gcc-11.3.0.tar.gz --directory=$(SRC_FOLDER)
 	rm -f $(SRC_FOLDER)/gcc-11.3.0.tar.gz
 
+# Run after dependencies
 build-utils:
 	@mkdir -p $(SRC_FOLDER)/build-binutils
 	
@@ -29,6 +30,7 @@ build-utils:
 	make && \
 	sudo make install
 
+# Run after dependencies and build-utils
 build-gcc:
 	@mkdir -p $(SRC_FOLDER)/build-gcc
 	
