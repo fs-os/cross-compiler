@@ -1,6 +1,21 @@
 # cross-compiler
 Cross-Compiler stuff for the free and simple operative system (fs-os)
 
+### Dependencies
+If you are on gentoo, you can run:
+```console
+$ sudo ./gentoo-deps.sh
+```
+In other systems, you will need to install:
+    - gcc
+    - make
+    - bison
+    - flex
+    - gmp
+    - mpc
+    - mpfr
+    - texinfo
+
 ### Building the cross-compiler
 Simply run
 ```console
