@@ -25,6 +25,12 @@ $ make
 ...
 ```
 
+Or in case you don't use sudo (for example doas):
+```console
+$ make ADMIN_CMD=doas
+...
+```
+
 Or individual make targets (Each target depends on the one before):
 ```console
 $ make dendencies   # For downloading and extracting the binutils and gcc sources
