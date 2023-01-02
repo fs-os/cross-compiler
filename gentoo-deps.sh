@@ -12,3 +12,5 @@ emerge ${EMERGE_FLAGS} \
     dev-libs/mpfr   \
     sys-apps/texinfo
 
+echo "Note: For building the iso you will need xorriso: (dev-libs/libisoburn)"
+
