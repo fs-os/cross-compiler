@@ -1,4 +1,6 @@
 
+ADMIN_CMD?=sudo
+
 SRC_FOLDER=src
 PREFIX=/usr/local/cross
 TARGET=i686-elf
@@ -28,7 +30,7 @@ build-utils:
 	cd $(SRC_FOLDER)/build-binutils && \
 	../binutils-2.39/configure --target=$(TARGET) --prefix="$(PREFIX)" --with-sysroot --disable-nls --disable-werror && \
 	make && \
-	sudo make install
+	$(ADMIN_CMD) make install
 
 # Run after dependencies and build-utils
 build-gcc:
@@ -40,6 +42,6 @@ build-gcc:
 	../gcc-12.2.0/configure --target=$(TARGET) --prefix="$(PREFIX)" --disable-nls --enable-languages=c --without-headers && \
 	make all-gcc && \
 	make all-target-libgcc && \
-	sudo make install-gcc && \
-	sudo make install-target-libgcc
+	$(ADMIN_CMD) make install-gcc && \
+	$(ADMIN_CMD) make install-target-libgcc
 
