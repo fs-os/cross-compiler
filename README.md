@@ -7,14 +7,14 @@ If you are on gentoo, you can run:
 $ sudo ./gentoo-deps.sh
 ```
 In other systems, you will need to install:
-    - gcc
-    - make
-    - bison
-    - flex
-    - gmp
-    - mpc
-    - mpfr
-    - texinfo
+- gcc
+- make
+- bison
+- flex
+- gmp
+- mpc
+- mpfr
+- texinfo
 
 ### Building the cross-compiler
 Simply run
