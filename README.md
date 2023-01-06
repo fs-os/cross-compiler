@@ -33,11 +33,22 @@ $ make ADMIN_CMD=doas
 
 Or individual make targets (Each target depends on the one before):
 ```console
-$ make dendencies   # For downloading and extracting the binutils and gcc sources
+$ make deps-binutils    # For downloading and extracting the binutils source
 ...
-$ make build-utils  # For building binutils 2.39 (Needs dependencies)
+$ make build-utils      # For building binutils 2.39 (Needs dependencies)
 ...
-$ make build-gcc    # For building gcc 11.3.0 (Needs binutils)
+$ make deps-gcc         # For downloading and extracting the gcc source
+...
+$ make build-gcc        # For building gcc 12.2.0 (Needs binutils)
+...
+```
+
+And if you also want to compile gdb (`/usr/local/cross/bin/i686-elf-gdb`) with a
+custom patch (not included in `all`):
+```console
+$ make deps-gdb         # For downloading and extracting the gcc source
+...
+$ make build-gdb        # For building gdb 12.1
 ...
 ```
 
