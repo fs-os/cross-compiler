@@ -1,0 +1,24 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Deps
+      run: make deps-binutils    # For downloading and extracting the binutils 2.39 and gcc 12.2.0 source
+
+    - name: Build binutils
+      run: make build-utils      # For building binutils 2.39 (Needs dependencies)
+      
+    - name: Build gcc
+      run: make build-gcc        # For building gcc 12.2.0 (Needs binutils)
