@@ -14,8 +14,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Deps
-      run: make deps-binutils    # For downloading and extracting the binutils 2.39 and gcc 12.2.0 source
+    - name: Dependencies
+      run: make dependencies     # For downloading and extracting the binutils 2.39 and gcc 12.2.0 source
 
     - name: Build binutils
       run: make build-utils      # For building binutils 2.39 (Needs dependencies)
