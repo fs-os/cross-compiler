@@ -16,7 +16,7 @@ jobs:
 
     - name: Dependencies
       run: |
-        apt install -y build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo libcloog-isl-dev libisl-dev
+        sudo apt install -y build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo libcloog-isl-dev libisl-dev
         make dependencies     # For downloading and extracting the binutils 2.39 and gcc 12.2.0 source
 
     - name: Build binutils
