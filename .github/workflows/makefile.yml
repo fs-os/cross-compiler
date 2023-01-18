@@ -18,7 +18,7 @@ jobs:
 
     - name: Dependencies
       run: |
-        sudo apt install -y build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo libisl-dev
+        ./debian-deps.sh      # Installing deps with apt
         make dependencies     # For downloading and extracting the binutils 2.39 and gcc 12.2.0 source
 
     - name: Build binutils
