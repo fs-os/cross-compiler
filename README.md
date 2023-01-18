@@ -6,6 +6,10 @@ If you are on gentoo, you can run:
 ```console
 $ sudo ./gentoo-deps.sh
 ```
+If you are on debian or ubuntu, you can run:
+```console
+$ ./debian-deps.sh
+```
 In other systems, you will need to install:
 - gcc
 - make
