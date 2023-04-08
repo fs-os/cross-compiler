@@ -1,7 +1,7 @@
 #!/bin/bash
 
-IMG="cross-compiler"                         # Image and container name for docker
-RUN_FLAGS="--rm -it -d --name $IMG"   # Flags for ./docker.sh run
+IMG="cross-compiler"           # Image and container name for docker
+RUN_FLAGS="--rm --name $IMG"   # Flags for ./docker.sh run
 
 # First check if there are no arguments
 if [[ $# == 0 ]]; then

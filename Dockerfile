@@ -3,8 +3,9 @@ COPY . /cross-compiler
 WORKDIR /cross-compiler
 
 # Install dependencies for building the package
-RUN apt-get update && \
-    ./debian-deps
+RUN apt-get update          && \
+    apt-get install -y sudo && \
+    ./debian-deps.sh
 
 RUN make deps-binutils # Download and extract the binutils source
 RUN make deps-gcc      # Download and extract the gcc source
