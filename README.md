@@ -1,5 +1,5 @@
 # cross-compiler
-Cross-Compiler stuff for the free and simple operative system (fs-os)
+**i386 cross-compiler for the Free and Simple Operative System**
 
 ### Dependencies
 If you are on gentoo, you can run:
@@ -8,7 +8,7 @@ $ sudo ./gentoo-deps.sh
 ```
 If you are on debian or ubuntu, you can run:
 ```console
-$ ./debian-deps.sh
+$ sudo ./debian-deps.sh
 ```
 In other systems, you will need to install:
 - gcc
