@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Run as root!
+if [ $(whoami) != "root" ]; then
+    echo "You need to be root!"
+    exit 1
+fi
+
 EMERGE_FLAGS="--ask --quiet"
 
 emerge ${EMERGE_FLAGS} \
