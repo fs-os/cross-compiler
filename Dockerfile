@@ -1,11 +1,11 @@
-FROM debian:11
+FROM ubuntu:20.04
 COPY . /cross-compiler
 WORKDIR /cross-compiler
 
 # Install dependencies for building the package
 RUN apt-get update          && \
     apt-get install -y sudo && \
-    ./debian-deps.sh
+    DEBIAN_FRONTEND=noninteractive ./debian-deps.sh
 
 RUN make deps-binutils # Download and extract the binutils source
 RUN make deps-gcc      # Download and extract the gcc source
