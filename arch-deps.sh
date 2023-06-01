@@ -19,4 +19,4 @@ sudo pacman -S \
     nasm
 
 echo "Note: For building the iso you will need xorriso: (libisoburn)"
-
+echo "Note: For running with qemu you will also need: (qemu-system-x86 qemu-ui-gtk qemu-audio-pa)"
