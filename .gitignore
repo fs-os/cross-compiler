@@ -1,5 +1,6 @@
-# Forder where we will download the dependencies and build them, don't commit
-/src
+# Forder where we will download the dependencies and build them.
+/archives
+/build
 
 # Prerequisites
 *.d
