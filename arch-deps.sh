@@ -1,13 +1,21 @@
 #!/bin/bash
 
-# Run as root!
-if [ $(whoami) != "root" ]; then
-    echo "You need to be root!"
-    exit 1
+if [ "$UID" -ne 0 ]; then
+    echo -n "This script must be ran as root, " 1>&2
+    if [ "$(command -v 'sudo')" ]; then
+        echo "escalating privileges..." 1>&2
+        exec sudo "$0" "$@"
+    else
+        echo "but 'sudo' was not found in the PATH." 1>&2
+        exit 1
+    fi
 fi
 
-sudo pacman -S \
-    curl       \
+# Cloning
+pacman -S curl
+
+# Building the cross-compiler
+pacman -S      \
     base-devel \
     bison      \
     flex       \
@@ -15,8 +23,11 @@ sudo pacman -S \
     libmpc     \
     mpfr       \
     texinfo    \
+
+# Building the Operating System
+pacman -S      \
     libisl     \
     nasm
 
-echo "Note: For building the iso you will need xorriso: (libisoburn)"
-echo "Note: For running with qemu you will also need: (qemu-system-x86 qemu-ui-gtk qemu-audio-pa)"
+echo "Note: For building the Operating System ISO, you will need xorriso: (libisoburn)"
+echo "Note: For running it with Qemu, you will also need: (qemu-system-x86 qemu-ui-gtk qemu-audio-pa)"
