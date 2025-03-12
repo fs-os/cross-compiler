@@ -1,16 +1,33 @@
-# cross-compiler
-**i386 cross-compiler for the Free and Simple Operative System**
+# i686 cross-compiler
 
-### Dependencies
-If you are on gentoo, you can run:
+**Automated build and installation of an i686 GCC cross-compiler.**
+
+## Installing the dependencies
+
+In order to build the cross-compiler, you will need to have some packages
+installed in your host machine.
+
+If you are using Arch Linux, you can run:
+
 ```console
-$ sudo ./gentoo-deps.sh
+$ sudo ./install-deps-arch.sh
 ```
-If you are on debian or ubuntu, you can run:
+
+If you are using Gentoo, you can run:
+
 ```console
-$ sudo ./debian-deps.sh
+$ sudo ./install-deps-gentoo.sh
 ```
-In other systems, you will need to install:
+
+If you are using Debian or Ubuntu, you can run:
+
+```console
+$ sudo ./install-deps-debian.sh
+```
+
+In other systems, you will need to install the following packages to build the
+cross-compiler:
+
 - gcc
 - make
 - bison
@@ -20,45 +37,55 @@ In other systems, you will need to install:
 - mpfr
 - texinfo
 
-### Building the cross-compiler
-Simply run
+## Building and installing the cross-compiler
+
+Clone this repository, and run `make`.
+
 ```console
 $ git clone https://github.com/fs-os/cross-compiler
 $ cd cross-compiler
-$ make
+$ make  # Build Binutils 2.39 and GCC 12.2.0
 ...
 ```
 
-Or in case you don't use sudo (for example doas):
+Or invoke the individual make targets.
+
 ```console
-$ make ADMIN_CMD=doas
+$ make deps-binutils  # Download and extract the Binutils 2.39 source
+...
+
+$ make build-utils    # Build Binutils 2.39
+...
+
+$ make deps-gcc       # Download and extract the GCC 12.2.0 source
+...
+
+$ make build-gcc      # Build GCC 12.2.0
 ...
 ```
 
-Or individual make targets (Each target depends on the one before):
+After you have built the cross compiler, you can install it with the `install`
+target. Remember to use `sudo` or a similar command for installing them as
+root. By default, the cross-compiler will be installed in
+`/usr/local/cross/bin/`, but this path can be overwritten with the `PREFIX`
+Makefile variable.
+
 ```console
-$ make deps-binutils    # For downloading and extracting the binutils source
-...
-$ make build-utils      # For building binutils 2.39 (Needs dependencies)
-...
-$ make deps-gcc         # For downloading and extracting the gcc source
-...
-$ make build-gcc        # For building gcc 12.2.0 (Needs binutils)
+$ sudo make install  # Install Binutils 2.39 and GCC 12.2.0
 ...
 ```
 
-And if you also want to compile gdb (`/usr/local/cross/bin/i686-elf-gdb`) with a
-custom patch (not included in `all`):
+## Building and installing the i686 debugger
+
+Optionally, you can compile the GNU debugger with a custom patch with the
+`build-gdb` target, and install it (to `/usr/local/cross/bin/i686-elf-gdb`) with
+the `install-gdb` target. By default, this is not build when invoking the `all`
+target.
+
 ```console
-$ make deps-gdb         # For downloading and extracting the gcc source
+$ make build-gdb  # For building GDB 12.1
 ...
-$ make build-gdb        # For building gdb 12.1
+
+$ sudo make install-gdb  # For installing it into '$PREFIX'
 ...
 ```
-
-### Todo
-- [ ] When building `gcc-12.2.0` (or `gcc-11.3.0`) with `nix-shell`, it fails with (Same error 3 times):
-
-    ```
-    ../../../gcc-11.3.0/libcpp/expr.c:811:35: error: format not a string literal and no format arguments [-Werror=format-security]
-    ```
