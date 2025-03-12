@@ -65,7 +65,7 @@ $(ARCHIVEDIR)/%: $(ARCHIVEDIR)/%.tar.gz
 # ----------------------------------------------------------------------------------
 
 .PHONY: build build-binutils build-gcc build-gdb
-build: build-binutils build-gcc build-gdb
+build: build-binutils build-gcc
 
 build-binutils: $(BINUTILS_BUILDDIR)
 build-gcc: $(GCC_BUILDDIR)
@@ -105,7 +105,7 @@ $(GDB_BUILDDIR): $(GDB_ARCHIVEDIR)
 
 # Remember to run as root when needed.
 .PHONY: install install-binutils install-gcc install-gdb
-install: install-binutils install-gcc install-gdb
+install: install-binutils install-gcc
 
 install-binutils: $(BINUTILS_BUILDDIR)
 	@[ "$$UID" -eq 0 ] || (echo "This target ($@) needs to be run as root." 1>&2 && exit 1)
