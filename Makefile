@@ -82,8 +82,9 @@ $(BINUTILS_BUILDDIR): $(BINUTILS_ARCHIVEDIR)
 # We modify the $PATH to include binaries from the 'build-binutils' target.
 #
 # FIXME: The 'build-gcc' target depends on the 'install-binutils' target,
-# because we need to add its binaries to the $PATH. We should somehow specify
-# the binaries from the build directory after 'build-binutils'.
+# because we need to add its binaries to the $PATH. We can't specify
+# the binutils build directory (BINUTILS_BUILDDIR), since those binaries don't
+# have the right names, and they problably wouldn't work with the right name.
 $(GCC_BUILDDIR): $(GCC_ARCHIVEDIR)
 	@mkdir -p "$@"
 	export PATH="$(PREFIX)/bin:$$PATH" && \
