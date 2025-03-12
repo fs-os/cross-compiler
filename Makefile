@@ -1,13 +1,29 @@
 
-ARCHIVEDIR=archives
-BUILDDIR=build
+# Installation path, also used when configuring the components.
+PREFIX=/usr/local/cross
 
+# Target architecture.
+TARGET=i686-elf
+
+# Component versions.
 BINUTILS_VER=2.39
 GCC_VER=12.2.0
 GDB_VER=12.1
 
-PREFIX=/usr/local/cross
-TARGET=i686-elf
+# Directories that will contain the extracted contents of each component.
+ARCHIVEDIR=archives
+BINUTILS_ARCHIVEDIR=$(ARCHIVEDIR)/binutils-$(BINUTILS_VER)
+GCC_ARCHIVEDIR=$(ARCHIVEDIR)/gcc-$(GCC_VER)
+GDB_ARCHIVEDIR=$(ARCHIVEDIR)/gdb-$(GDB_VER)
+
+# Directories used when building each component.
+#
+# NOTE: We need to build in a different path because building in the source tree
+# is unsupported by GNU.
+BUILDDIR=build
+BINUTILS_BUILDDIR=$(BUILDDIR)/binutils-$(BINUTILS_VER)
+GCC_BUILDDIR=$(BUILDDIR)/gcc-$(GCC_VER)
+GDB_BUILDDIR=$(BUILDDIR)/gdb-$(GDB_VER)
 
 # ------------------------------------------------------------------------------
 
@@ -51,17 +67,13 @@ $(ARCHIVEDIR)/%: $(ARCHIVEDIR)/%.tar.gz
 .PHONY: build build-binutils build-gcc build-gdb
 build: build-binutils build-gcc build-gdb
 
-# Arbitrary files that only exist when the target is built.
-#
-# NOTE: We need to build in a different path because building in the source tree
-# is unsupported by GNU.
-build-binutils: $(BUILDDIR)/binutils-$(BINUTILS_VER)
-build-gcc: $(BUILDDIR)/gcc-$(GCC_VER)
-build-gdb: $(BUILDDIR)/gdb-$(GDB_VER)
+build-binutils: $(BINUTILS_BUILDDIR)
+build-gcc: $(GCC_BUILDDIR)
+build-gdb: $(GDB_BUILDDIR)
 
 # TODO: Don't use annoying "&& \", which are needed because we are changing
 # directory across multiple commands. We could perhaps use '.ONESHELL'.
-$(BUILDDIR)/binutils-$(BINUTILS_VER): $(ARCHIVEDIR)/binutils-$(BINUTILS_VER)
+$(BINUTILS_BUILDDIR): $(BINUTILS_ARCHIVEDIR)
 	@mkdir -p "$@"
 	cd "$@" && \
 	"$(PWD)/$</configure" --target="$(TARGET)" --prefix="$(PREFIX)" --disable-nls --with-sysroot --disable-werror && \
@@ -72,7 +84,7 @@ $(BUILDDIR)/binutils-$(BINUTILS_VER): $(ARCHIVEDIR)/binutils-$(BINUTILS_VER)
 # FIXME: The 'build-gcc' target depends on the 'install-binutils' target,
 # because we need to add its binaries to the $PATH. We should somehow specify
 # the binaries from the build directory after 'build-binutils'.
-$(BUILDDIR)/gcc-$(GCC_VER): $(ARCHIVEDIR)/gcc-$(GCC_VER)
+$(GCC_BUILDDIR): $(GCC_ARCHIVEDIR)
 	@mkdir -p "$@"
 	export PATH="$(PREFIX)/bin:$$PATH" && \
 	cd "$@" && \
@@ -81,7 +93,7 @@ $(BUILDDIR)/gcc-$(GCC_VER): $(ARCHIVEDIR)/gcc-$(GCC_VER)
 	make all-target-libgcc
 
 # FIXME: There is a compilation error.
-$(BUILDDIR)/gdb-$(GDB_VER): $(ARCHIVEDIR)/gdb-$(GDB_VER)
+$(GDB_BUILDDIR): $(GDB_ARCHIVEDIR)
 	@mkdir -p "$@"
 	cd "$<" && \
 	patch --forward -p1 < "$(PWD)/remote-packet-patch.diff" # End of source patching
@@ -95,18 +107,18 @@ $(BUILDDIR)/gdb-$(GDB_VER): $(ARCHIVEDIR)/gdb-$(GDB_VER)
 .PHONY: install install-binutils install-gcc install-gdb
 install: install-binutils install-gcc install-gdb
 
-install-binutils: $(BUILDDIR)/binutils-$(BINUTILS_VER)
+install-binutils: $(BINUTILS_BUILDDIR)
 	@[ "$$UID" -eq 0 ] || (echo "This target ($@) needs to be run as root." 1>&2 && exit 1)
 	cd "$<" && \
 	make install
 
-install-gcc: $(BUILDDIR)/gcc-$(GCC_VER)
+install-gcc: $(GCC_BUILDDIR)
 	@[ "$$UID" -eq 0 ] || (echo "This target ($@) needs to be run as root." 1>&2 && exit 1)
 	cd "$<" && \
 	make install-gcc && \
 	make install-target-libgcc
 
-install-gdb: $(BUILDDIR)/gdb-$(GDB_VER)
+install-gdb: $(GDB_BUILDDIR)
 	@[ "$$UID" -eq 0 ] || (echo "This target ($@) needs to be run as root." 1>&2 && exit 1)
 	cd "$<" && \
 	make install-gdb
