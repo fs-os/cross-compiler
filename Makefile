@@ -45,15 +45,15 @@ dependencies: $(ARCHIVEDIR)/binutils-$(BINUTILS_VER) $(ARCHIVEDIR)/gcc-$(GCC_VER
 
 $(ARCHIVEDIR)/binutils-$(BINUTILS_VER).tar.gz:
 	@mkdir -p "$(dir $@)"
-	curl -o $@ https://ftp.gnu.org/gnu/binutils/binutils-$(BINUTILS_VER).tar.gz
+	curl -o $@ "https://ftp.gnu.org/gnu/binutils/binutils-$(BINUTILS_VER).tar.gz"
 
 $(ARCHIVEDIR)/gcc-$(GCC_VER).tar.gz:
 	@mkdir -p "$(dir $@)"
-	curl -o $@ https://ftp.gnu.org/gnu/gcc/gcc-$(GCC_VER)/gcc-$(GCC_VER).tar.gz
+	curl -o $@ "https://ftp.gnu.org/gnu/gcc/gcc-$(GCC_VER)/gcc-$(GCC_VER).tar.gz"
 
 $(ARCHIVEDIR)/gdb-$(GDB_VER).tar.gz:
 	@mkdir -p "$(dir $@)"
-	curl -o $@ https://ftp.gnu.org/gnu/gdb/gdb-$(GDB_VER).tar.gz
+	curl -o $@ "https://ftp.gnu.org/gnu/gdb/gdb-$(GDB_VER).tar.gz"
 
 # NOTE: We need to touch the extracted directory so it's timestamp is updated
 # and future calls to 'make' can detect that the directory is newer than the
