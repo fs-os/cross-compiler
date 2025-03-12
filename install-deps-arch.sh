@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ "$UID" -ne 0 ]; then
     echo -n "This script must be ran as root, " 1>&2
@@ -11,23 +11,21 @@ if [ "$UID" -ne 0 ]; then
     fi
 fi
 
-# Cloning
-pacman -S curl
+# Dependencies for cloning the sources.
+cloning_deps=(curl)
 
-# Building the cross-compiler
-pacman -S      \
-    base-devel \
-    bison      \
-    flex       \
-    gmp        \
-    libmpc     \
-    mpfr       \
-    texinfo    \
+# Dependencies for building the cross-compiler.
+building_deps=(base-devel
+               bison
+               flex
+               gmp
+               libmpc
+               mpfr
+               texinfo
+               libisl)
 
-# Building the Operating System
-pacman -S      \
-    libisl     \
-    nasm
+pacman -S "${cloning_deps[@]}" "${building_deps[@]}"
 
+echo "Note: For building the Operating System ISO, you will need NASM: (nasm)"
 echo "Note: For building the Operating System ISO, you will need xorriso: (libisoburn)"
 echo "Note: For running it with Qemu, you will also need: (qemu-system-x86 qemu-ui-gtk qemu-audio-pa)"

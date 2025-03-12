@@ -1,30 +1,27 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-ADMIN_CMD=""
-
-# If we are root, run without sudo. Debian docker container doesn't include sudo
-if [ $(whoami) != "root" ]; then
-    # If we are not root but we have sudo installed, use it when calling apt
-    if [ $(command -v sudo) ]; then
-        ADMIN_CMD="sudo"
+if [ "$UID" -ne 0 ]; then
+    echo -n "This script must be ran as root, " 1>&2
+    if [ "$(command -v 'sudo')" ]; then
+        echo "escalating privileges..." 1>&2
+        exec sudo "$0" "$@"
     else
-        # If we are not root and we don't have sudo, exit
-        echo "You need to be root!"
+        echo "but 'sudo' was not found in the PATH." 1>&2
         exit 1
     fi
 fi
 
-# Dependencies for debian/ubuntu
-# Nasm is not required for the cross-compiler but its required for fs-os
-$ADMIN_CMD apt install -y \
-    curl                  \
-    build-essential       \
-    bison                 \
-    flex                  \
-    libgmp3-dev           \
-    libmpc-dev            \
-    libmpfr-dev           \
-    texinfo               \
-    libisl-dev            \
-    nasm
+# Dependencies for cloning the sources.
+cloning_deps=(curl)
 
+# Dependencies for building the cross-compiler.
+building_deps=(build-essential
+               bison
+               flex
+               libgmp3-dev
+               libmpc-dev
+               libmpfr-dev
+               texinfo
+               libisl-dev)
+
+apt install -y "${cloning_deps[@]}" "${building_deps[@]}"
