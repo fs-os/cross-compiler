@@ -18,17 +18,17 @@ jobs:
 
     - name: Dependencies
       run: |
-        ./install-deps-debian.sh  # Install dependencies with 'apt'
-        make dependencies         # Download and extract the Binutils 2.39 and GCC 12.2.0 sources
+        sudo ./install-deps-debian.sh  # Install dependencies with 'apt'
+        make dependencies              # Download and extract the Binutils 2.39 and GCC 12.2.0 sources
 
     - name: Build binutils
-      run: make build-binutils    # Build Binutils 2.39
+      run: make build-binutils         # Build Binutils 2.39
 
     - name: Install binutils
-      run: make install-binutils  # Install Binutils 2.39
+      run: sudo make install-binutils  # Install Binutils 2.39
 
     - name: Build GCC
-      run: make build-gcc         # Build GCC 12.2.0
+      run: make build-gcc              # Build GCC 12.2.0
 
     - name: Install GCC
-      run: make install-binutils  # Install GCC 12.2.0
+      run: sudo make install-binutils  # Install GCC 12.2.0
