@@ -31,10 +31,9 @@ $(ARCHIVEDIR)/binutils-$(BINUTILS_VER).tar.gz:
 	@mkdir -p "$(dir $@)"
 	curl -o $@ https://ftp.gnu.org/gnu/binutils/binutils-$(BINUTILS_VER).tar.gz
 
-# TODO: Why not use GNU's FTP?
 $(ARCHIVEDIR)/gcc-$(GCC_VER).tar.gz:
 	@mkdir -p "$(dir $@)"
-	curl -o $@ https://bigsearcher.com/mirrors/gcc/releases/gcc-$(GCC_VER)/gcc-$(GCC_VER).tar.gz
+	curl -o $@ https://ftp.gnu.org/gnu/gcc/gcc-$(GCC_VER)/gcc-$(GCC_VER).tar.gz
 
 $(ARCHIVEDIR)/gdb-$(GDB_VER).tar.gz:
 	@mkdir -p "$(dir $@)"
