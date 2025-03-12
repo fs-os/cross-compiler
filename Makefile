@@ -76,7 +76,7 @@ build-gdb: $(GDB_BUILDDIR)
 $(BINUTILS_BUILDDIR): $(BINUTILS_ARCHIVEDIR)
 	@mkdir -p "$@"
 	cd "$@" && \
-	"$(PWD)/$</configure" --target="$(TARGET)" --prefix="$(PREFIX)" --disable-nls --with-sysroot --disable-werror && \
+	"$(abspath $<)/configure" --target="$(TARGET)" --prefix="$(PREFIX)" --disable-nls --with-sysroot --disable-werror && \
 	make
 
 # We modify the $PATH to include binaries from the 'build-binutils' target.
@@ -89,7 +89,7 @@ $(GCC_BUILDDIR): $(GCC_ARCHIVEDIR)
 	@mkdir -p "$@"
 	export PATH="$(PREFIX)/bin:$$PATH" && \
 	cd "$@" && \
-	"$(PWD)/$</configure" --target="$(TARGET)" --prefix="$(PREFIX)" --disable-nls --enable-languages=c --without-headers && \
+	"$(abspath $<)/configure" --target="$(TARGET)" --prefix="$(PREFIX)" --disable-nls --enable-languages=c --without-headers && \
 	make all-gcc && \
 	make all-target-libgcc
 
@@ -99,7 +99,7 @@ $(GDB_BUILDDIR): $(GDB_ARCHIVEDIR)
 	cd "$<" && \
 	patch --forward -p1 < "$(PWD)/remote-packet-patch.diff" # End of source patching
 	cd "$@" && \
-	"$(PWD)/$</configure" --target="$(TARGET)" --prefix="$(PREFIX)" --disable-nls && \
+	"$(abspath $<)/configure" --target="$(TARGET)" --prefix="$(PREFIX)" --disable-nls && \
 	make all-gdb
 
 # ----------------------------------------------------------------------------------
