@@ -97,14 +97,17 @@ $(BUILDDIR)/gdb-$(GDB_VER): $(ARCHIVEDIR)/gdb-$(GDB_VER)
 install: install-binutils install-gcc install-gdb
 
 install-binutils: $(BUILDDIR)/binutils-$(BINUTILS_VER)
+	@[ "$$UID" -eq 0 ] || (echo "This target ($@) needs to be run as root." 1>&2 && exit 1)
 	cd "$<" && \
 	make install
 
 install-gcc: $(BUILDDIR)/gcc-$(GCC_VER)
+	@[ "$$UID" -eq 0 ] || (echo "This target ($@) needs to be run as root." 1>&2 && exit 1)
 	cd "$<" && \
 	make install-gcc && \
 	make install-target-libgcc
 
 install-gdb: $(BUILDDIR)/gdb-$(GDB_VER)
+	@[ "$$UID" -eq 0 ] || (echo "This target ($@) needs to be run as root." 1>&2 && exit 1)
 	cd "$<" && \
 	make install-gdb
